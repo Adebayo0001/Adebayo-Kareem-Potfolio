@@ -96,20 +96,47 @@ export default function Contact({ projectId }: ContactProps) {
     setSubmitStatus("VALIDATING");
     setFormLogs(["[SYSTEM] Initiating transmission sequence..."]);
 
-    setTimeout(() => {
+    setTimeout(async () => {
       setFormLogs(prev => [...prev, "[INTEGRITY] Fields verified. Payload structured successfully."]);
       setSubmitStatus("TRANSMITTING");
       setFormLogs(prev => [...prev, "[NETWORK] Establishing secure handshake with gateway..."]);
 
-      setTimeout(() => {
-        setFormLogs(prev => [
-          ...prev, 
-          "[SECURITY] Verification complete. Transit protocol established.",
-          "[DELIVERY] Message queued. Adebayo will review within 24 hours."
-        ]);
-        setSubmitStatus("SUCCESS");
-      }, 1200);
-    }, 1000);
+      try {
+        const response = await fetch("https://formsubmit.co/ajax/a.abidemi0777@gmail.com", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            intent,
+            message,
+            _subject: `New Portfolio Inquiry from ${name}`,
+            _template: "table"
+          })
+        });
+
+        if (response.ok) {
+          setTimeout(() => {
+            setFormLogs(prev => [
+              ...prev, 
+              "[SECURITY] Verification complete. Transit protocol established.",
+              "[DELIVERY] Message transmitted to a.abidemi0777@gmail.com successfully."
+            ]);
+            setSubmitStatus("SUCCESS");
+          }, 800);
+        } else {
+          throw new Error("Transmission failed");
+        }
+      } catch (error) {
+        setTimeout(() => {
+          setFormLogs(prev => [...prev, "[ERROR] Transmission failed. Please try again or use direct email."]);
+          setSubmitStatus("IDLE");
+        }, 800);
+      }
+    }, 800);
   };
 
   const handleReset = () => {
@@ -206,31 +233,7 @@ export default function Contact({ projectId }: ContactProps) {
               </a>
             </div>
 
-            {/* Book Call Compact Bar */}
-            <div className="border border-[#202020] bg-[#FFFFFF] p-5 relative flex flex-col justify-between shadow-[2px_2px_0px_0px_rgba(32,32,32,1)] hover:shadow-[4px_4px_0px_0px_rgba(32,32,32,1)] transition-all group">
-              <div className="flex justify-between items-center mb-3">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-[#F5F0E8] text-[#202020] border border-[#202020]/10 group-hover:bg-[#FFB404] transition-colors">
-                    <PhoneCall className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <h3 className="font-sans text-sm font-bold text-[#202020] uppercase">SCHEDULE CALL</h3>
-                    <p className="font-sans text-[11px] text-[#202020]/75">Align details via quick consultation</p>
-                  </div>
-                </div>
-                <span className="font-mono text-[9px] text-[#202020]/40 font-bold">03</span>
-              </div>
-              <a 
-                href={callHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={trackBookingClick}
-                className="inline-flex items-center justify-between font-mono text-[10px] font-bold text-[#202020] uppercase bg-[#F5F0E8] border border-[#202020] px-3.5 py-2.5 hover:bg-[#202020] hover:text-[#F5F0E8] transition-all rounded"
-              >
-                <span>BOOK BRIEF CONSULTATION</span>
-                <ArrowRight className="w-3 h-3" />
-              </a>
-            </div>
+
           </div>
 
           {/* Right Column: Intent-Based Form (lg:col-span-7) */}

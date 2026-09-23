@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Project } from '../types';
 import { PROJECTS } from '../data';
-import { ArrowLeft, ArrowRight, ShieldCheck, Cpu, Target, Layers, ExternalLink, Quote } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ShieldCheck, Cpu, Target, Layers, ExternalLink, Quote, AlertTriangle, Sparkles, CheckCircle, Smartphone, BarChart3, Bot } from 'lucide-react';
 import { trackCaseStudyView, trackProjectView } from '../lib/analytics';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import Contact from './Contact';
@@ -33,7 +33,7 @@ export default function CaseStudy({ projectId, onBackToWork, onNavigateToProject
         <span className="font-mono text-xs text-red-500 font-bold">[ CRITICAL_ERROR: RESOURCE_NOT_FOUND ]</span>
         <h2 className="font-sans text-2xl font-bold text-[#202020]">Project Reference Not Identified</h2>
         <button onClick={onBackToWork} className="font-mono text-xs font-bold text-[#202020] underline mt-4 focus-visible:ring-2 focus-visible:ring-[#FFB404] focus-visible:outline-none p-1 rounded">
-          &larr; SECURE DISPATCH ENTRYPOINT
+          BACK TO WORK
         </button>
       </div>
     );
@@ -43,82 +43,17 @@ export default function CaseStudy({ projectId, onBackToWork, onNavigateToProject
   const relatedWork = PROJECTS.filter(p => p.id !== project.id).slice(0, 2);
 
   // Custom visual rendering for editorial project cover
-  const renderEditorialCover = (type: string) => {
-    const isBuild = type === 'build';
-    const isPosition = type === 'position';
-    const isEnable = type === 'enable';
-    const isTransform = type === 'transform';
-
+  const renderEditorialCover = (project: any) => {
     return (
-      <div className={`w-full h-full relative p-6 sm:p-12 flex flex-col justify-between overflow-hidden border border-[#202020] ${
-        isBuild ? 'bg-[#202020] text-[#F5F0E8]' :
-        isPosition ? 'bg-[#FFFFFF] text-[#202020]' :
-        isEnable ? 'bg-[#FFB404] text-[#202020]' :
-        'bg-[#F5F0E8] text-[#202020]'
-      }`}>
-        {/* Subtle grid background */}
-        <div className="absolute inset-0 opacity-10 pointer-events-none">
-          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <defs>
-              <pattern id="coverGrid" width="40" height="40" patternUnits="userSpaceOnUse">
-                <rect width="40" height="40" fill="none" stroke="currentColor" strokeWidth="0.5" />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#coverGrid)" />
-          </svg>
-        </div>
-
-        {/* Top bar details */}
-        <div className="flex justify-between items-start z-10 font-mono text-[10px] tracking-widest font-bold">
-          <span>AK-PLATE // COV-{project.num}</span>
-          <span className="opacity-70">CLASSIFICATION: {project.category}</span>
-        </div>
-
-        {/* Dynamic center graphics */}
-        <div className="my-12 flex items-center justify-center z-10">
-          {isBuild && (
-            <div className="w-40 h-40 border border-[#F5F0E8]/20 flex items-center justify-center relative rounded-full">
-              <div className={`absolute inset-4 border border-[#FFB404]/30 rounded-full ${shouldReduceMotion ? '' : 'animate-pulse'}`} />
-              <div className="w-16 h-16 border border-[#FFB404] flex items-center justify-center bg-[#202020] rounded-full">
-                <Cpu className="w-6 h-6 text-[#FFB404]" />
-              </div>
-            </div>
-          )}
-
-          {isPosition && (
-            <div className="flex flex-col items-start border-l-2 border-[#FFB404] pl-6 max-w-sm">
-              <span className="font-mono text-[10px] text-[#202020]/50 tracking-widest font-bold uppercase">BRAND GRID</span>
-              <span className="font-sans text-xl font-bold tracking-tight text-[#202020] mt-1 italic">
-                Restraint is a system, not a style.
-              </span>
-            </div>
-          )}
-
-          {isEnable && (
-            <div className="w-48 h-24 border border-[#202020] bg-[#FFFFFF] p-4 flex flex-col justify-between shadow-[4px_4px_0px_0px_rgba(32,32,32,1)]">
-              <div className="flex justify-between items-center border-b border-[#202020]/10 pb-2">
-                <span className="font-mono text-[9px] text-[#202020]/60 font-bold uppercase">CURRICULUM MODULE</span>
-                <span className={`w-2 h-2 rounded-full bg-green-500 ${shouldReduceMotion ? '' : 'animate-ping'}`} />
-              </div>
-              <span className="font-mono text-xs font-bold text-[#202020] uppercase tracking-wider">TSE_ACADEMY_ACTIVE_RUN</span>
-            </div>
-          )}
-
-          {isTransform && (
-            <div className="flex flex-col gap-3 max-w-xs w-full">
-              <div className="flex items-center justify-between border border-[#202020] bg-[#FFFFFF] p-2 text-xs shadow-[3px_3px_0px_0px_rgba(32,32,32,1)]">
-                <span className="font-mono text-[9px] text-[#202020] font-bold">COMPLIANT SECURE</span>
-                <ShieldCheck className="w-4 h-4 text-green-600" />
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Bottom bar details */}
-        <div className="flex justify-between items-end z-10 border-t border-current/15 pt-4 font-mono text-[9px] uppercase">
-          <span>ALIGNED METADATA: {project.domain}</span>
-          <span className="font-bold">YEAR: {project.year}</span>
-        </div>
+      <div className="w-full h-full relative flex items-center justify-center overflow-hidden bg-[#F5F0E8] border border-[#202020]">
+        <img 
+          src={`/images/projects/${project.id}.png`} 
+          alt={`${project.title} Editorial Cover`}
+          className="absolute inset-0 w-full h-full object-cover"
+          onError={(e) => {
+            (e.target as HTMLImageElement).src = `https://placehold.co/1200x800/eeeeee/999999?text=${project.title.replace(/ /g, '+')}`;
+          }}
+        />
       </div>
     );
   };
@@ -134,7 +69,7 @@ export default function CaseStudy({ projectId, onBackToWork, onNavigateToProject
           aria-label="Back to active work archive"
         >
           <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
-          <span>&larr; BACK TO WORK</span>
+          <span>BACK TO WORK</span>
         </button>
 
         <span className="font-mono text-[10px] text-[#202020]/50 uppercase tracking-widest font-bold">
@@ -167,52 +102,137 @@ export default function CaseStudy({ projectId, onBackToWork, onNavigateToProject
 
       {/* 3. Hero Visual Box */}
       <div className="w-full aspect-[16/9] sm:aspect-[16/8] shadow-[8px_8px_0px_0px_rgba(32,32,32,1)] relative">
-        {renderEditorialCover(project.imageType || 'build')}
+        {renderEditorialCover(project)}
       </div>
 
       {/* 4. Strategic Content Modules */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
         
-        {/* Left Column: Core Narrative (8 cols) */}
-        <div className="lg:col-span-8 flex flex-col gap-12 lg:gap-16">
+        {/* Main Column: Core Narrative (12 cols) */}
+        <div className="lg:col-span-12 flex flex-col gap-12 lg:gap-16">
           
           {/* Context Module */}
           {project.context && (
             <section className="flex flex-col gap-3" aria-labelledby="module-context">
-              <span className="font-mono text-[10px] text-[#202020]/50 font-bold uppercase tracking-widest">01 / CONTEXT</span>
-              <h3 id="module-context" className="font-sans text-xl sm:text-2xl font-bold text-[#202020] uppercase tracking-tight">OPERATIONAL ENVIRONMENT</h3>
+              <span className="font-mono text-[10px] text-[#202020]/50 font-bold uppercase tracking-widest">01 / CONTEXT & OVERVIEW</span>
+              <h3 id="module-context" className="font-sans text-xl sm:text-2xl font-bold text-[#202020] uppercase tracking-tight">PROJECT OVERVIEW</h3>
               <p className="font-sans text-base text-[#202020]/90 leading-relaxed mt-1">
                 {project.context}
               </p>
             </section>
           )}
 
-          {/* Challenge Module */}
+          {/* Challenge Module & Problem Points */}
           {project.challenge && (
-            <section className="flex flex-col gap-3" aria-labelledby="module-challenge">
-              <span className="font-mono text-[10px] text-[#202020]/50 font-bold uppercase tracking-widest">02 / CHALLENGE</span>
-              <h3 id="module-challenge" className="font-sans text-xl sm:text-2xl font-bold text-[#202020] uppercase tracking-tight">THE PROBLEM VECTOR</h3>
-              <p className="font-sans text-base text-[#202020]/90 leading-relaxed mt-1">
+            <section className="flex flex-col gap-4" aria-labelledby="module-challenge">
+              <span className="font-mono text-[10px] text-[#202020]/50 font-bold uppercase tracking-widest">02 / CHALLENGE & PAIN POINTS</span>
+              <h3 id="module-challenge" className="font-sans text-xl sm:text-2xl font-bold text-[#202020] uppercase tracking-tight">THE PROBLEM</h3>
+              <p className="font-sans text-base text-[#202020]/90 leading-relaxed">
                 {project.challenge}
               </p>
+
+              {/* Numbered Problem Points */}
+              {project.problemPoints && project.problemPoints.length > 0 && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+                  {project.problemPoints.map((point, idx) => (
+                    <div key={idx} className="border border-[#202020] bg-[#FFFFFF] p-4 flex flex-col justify-between shadow-[2px_2px_0px_0px_rgba(32,32,32,1)]">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="font-mono text-xs font-bold text-[#FFB404] bg-[#202020] px-1.5 py-0.5">
+                          0{idx + 1}
+                        </span>
+                        <h4 className="font-sans text-sm font-bold text-[#202020] uppercase">
+                          {point.title}
+                        </h4>
+                      </div>
+                      <p className="font-sans text-xs text-[#202020]/80 leading-relaxed">
+                        {point.desc}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
             </section>
           )}
 
-          {/* Approach Module */}
+          {/* Approach / Solution Module */}
           {project.approach && (
             <section className="flex flex-col gap-3" aria-labelledby="module-approach">
-              <span className="font-mono text-[10px] text-[#202020]/50 font-bold uppercase tracking-widest">03 / APPROACH</span>
-              <h3 id="module-approach" className="font-sans text-xl sm:text-2xl font-bold text-[#202020] uppercase tracking-tight">STRATEGIC FORMULATION</h3>
+              <span className="font-mono text-[10px] text-[#202020]/50 font-bold uppercase tracking-widest">03 / ARCHITECTURAL APPROACH</span>
+              <h3 id="module-approach" className="font-sans text-xl sm:text-2xl font-bold text-[#202020] uppercase tracking-tight">THE SOLUTION</h3>
               <p className="font-sans text-base text-[#202020]/90 leading-relaxed mt-1">
                 {project.approach}
               </p>
             </section>
           )}
 
+          {/* Key Features Developed (if available) */}
+          {project.keyFeatures && project.keyFeatures.length > 0 && (
+            <section className="flex flex-col gap-4" aria-labelledby="module-features">
+              <span className="font-mono text-[10px] text-[#202020]/50 font-bold uppercase tracking-widest">04 / FUNCTIONAL BLUEPRINT</span>
+              <h3 id="module-features" className="font-sans text-xl sm:text-2xl font-bold text-[#202020] uppercase tracking-tight">KEY FEATURES DEVELOPED</h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mt-4">
+                {project.keyFeatures.map((feat, idx) => {
+                  // Extract leading number if present (e.g., "1. ")
+                  const rawNumber = feat.title.match(/^\d+/)?.[0] || String(idx + 1);
+                  const cleanTitle = feat.title.replace(/^\d+\.\s*/, '');
+                  
+                  return (
+                    <div key={idx} className="group relative flex flex-col justify-between border border-[#202020]/20 bg-[#FFFFFF] p-6 shadow-[2px_2px_0px_0px_rgba(32,32,32,0.05)] hover:shadow-[4px_4px_0px_0px_rgba(32,32,32,1)] transition-all duration-300">
+                      
+                      {/* Accent Top Border */}
+                      <div className="absolute top-0 left-0 w-full h-1 bg-[#202020]/5 group-hover:bg-[#FFB404] transition-colors duration-300" />
+                      
+                      <div className="flex flex-col gap-3 z-10 pt-2">
+                        <div className="flex items-center gap-3">
+                          <span className="font-mono text-[10px] bg-[#F5F0E8] border border-[#202020]/10 px-1.5 py-0.5 text-[#202020]/60 font-bold shrink-0 group-hover:bg-[#202020] group-hover:text-[#FFB404] transition-colors duration-300">
+                            {String(rawNumber).padStart(2, '0')}
+                          </span>
+                          <h4 className="font-sans text-sm font-bold text-[#202020] uppercase tracking-tight">
+                            {cleanTitle}
+                          </h4>
+                        </div>
+                        <p className="font-sans text-sm text-[#202020]/80 leading-relaxed mt-1">
+                          {feat.desc}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            </section>
+          )}
+
+          {/* Behind The Scenes Workflow (if available) */}
+          {project.behindTheScenes && project.behindTheScenes.length > 0 && (
+            <section className="flex flex-col gap-4" aria-labelledby="module-workflow">
+              <span className="font-mono text-[10px] text-[#202020]/50 font-bold uppercase tracking-widest">05 / PIPELINE ARCHITECTURE</span>
+              <h3 id="module-workflow" className="font-sans text-xl sm:text-2xl font-bold text-[#202020] uppercase tracking-tight">HOW IT WORKED BEHIND THE SCENES</h3>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-1">
+                {project.behindTheScenes.map((bts, idx) => (
+                  <div key={idx} className="border border-[#202020] bg-[#F5F0E8] p-4 flex flex-col justify-between">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="font-mono text-xs font-bold text-[#202020] bg-[#FFB404] px-2 py-0.5">
+                        STEP {bts.step}
+                      </span>
+                      <h4 className="font-sans text-sm font-bold text-[#202020] uppercase">
+                        {bts.title}
+                      </h4>
+                    </div>
+                    <p className="font-sans text-xs text-[#202020]/80 leading-relaxed mt-1">
+                      {bts.desc}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
           {/* Contribution Module */}
           {project.contribution && (
             <section className="flex flex-col gap-3" aria-labelledby="module-contribution">
-              <span className="font-mono text-[10px] text-[#202020]/50 font-bold uppercase tracking-widest">04 / CONTRIBUTION</span>
+              <span className="font-mono text-[10px] text-[#202020]/50 font-bold uppercase tracking-widest">06 / CONTRIBUTION</span>
               <h3 id="module-contribution" className="font-sans text-xl sm:text-2xl font-bold text-[#202020] uppercase tracking-tight">HANDS-ON SPECIALIST EXECUTION</h3>
               <p className="font-sans text-base text-[#202020]/90 leading-relaxed mt-1">
                 {project.contribution}
@@ -220,14 +240,22 @@ export default function CaseStudy({ projectId, onBackToWork, onNavigateToProject
             </section>
           )}
 
-          {/* Outcome Module */}
+          {/* Outcome & Impact Module */}
           {project.outcome && (
             <section className="flex flex-col gap-3" aria-labelledby="module-outcome">
-              <span className="font-mono text-[10px] text-[#202020]/50 font-bold uppercase tracking-widest">05 / OUTCOME</span>
-              <h3 id="module-outcome" className="font-sans text-xl sm:text-2xl font-bold text-[#202020] uppercase tracking-tight">OPERATIONAL telemetry RESULTS</h3>
+              <span className="font-mono text-[10px] text-[#202020]/50 font-bold uppercase tracking-widest">07 / OUTCOME & IMPACT</span>
+              <h3 id="module-outcome" className="font-sans text-xl sm:text-2xl font-bold text-[#202020] uppercase tracking-tight">THE IMPACT & RESULTS</h3>
               <p className="font-sans text-base text-[#202020]/90 leading-relaxed mt-1">
                 {project.outcome}
               </p>
+              {project.impactStatement && (
+                <div className="mt-3 p-4 bg-[#202020] text-[#F5F0E8] border-l-4 border-[#FFB404]">
+                  <span className="font-mono text-[10px] text-[#FFB404] uppercase font-bold tracking-widest block mb-1">KEY PERFORMANCE METRIC</span>
+                  <p className="font-sans text-sm font-medium leading-relaxed">
+                    {project.impactStatement}
+                  </p>
+                </div>
+              )}
             </section>
           )}
 
@@ -254,99 +282,6 @@ export default function CaseStudy({ projectId, onBackToWork, onNavigateToProject
           )}
 
         </div>
-
-        {/* Right Column: Static Technical Specifications (4 cols) */}
-        <div className="lg:col-span-4 border border-[#202020] bg-[#FFFFFF] p-6 sm:p-8 flex flex-col gap-6 relative shadow-[1px_1px_0px_0px_rgba(32,32,32,1)]">
-          <span className="absolute -top-[1px] -left-[1px] w-4 h-4 border-t border-l border-[#202020]" />
-          <span className="absolute -bottom-[1px] -right-[1px] w-4 h-4 border-b border-r border-[#202020]" />
-          
-          <div className="border-b border-[#202020]/10 pb-4">
-            <span className="font-mono text-[9px] text-[#202020]/50 uppercase font-bold tracking-widest">GATEWAY_CLASSIFICATION</span>
-            <span className="block font-sans text-lg font-bold text-[#202020] mt-1">PROJECT DETAILS</span>
-          </div>
-
-          <div className="flex flex-col gap-4 font-mono text-[11px]">
-            {/* Project Year */}
-            <div className="flex justify-between border-b border-[#202020]/5 pb-2">
-              <span className="text-[#202020]/60 font-bold">YEAR:</span>
-              <span className="font-bold text-[#202020]">{project.year}</span>
-            </div>
-
-            {/* Client */}
-            <div className="flex flex-col gap-1 border-b border-[#202020]/5 pb-2 text-left">
-              <span className="text-[#202020]/60 font-bold">CLIENT/ENTITY:</span>
-              <span className="font-bold text-[#202020] uppercase text-left">
-                {project.client || '[PLACEHOLDER: CONFIDENTIAL ENTERPRISE]'}
-              </span>
-            </div>
-
-            {/* Role */}
-            <div className="flex flex-col gap-1 border-b border-[#202020]/5 pb-2 text-left">
-              <span className="text-[#202020]/60 font-bold">ROLE:</span>
-              <span className="font-bold text-[#202020] uppercase text-left">
-                {project.role || '[PLACEHOLDER: LEAD STRATEGIST]'}
-              </span>
-            </div>
-
-            {/* Case Study Status */}
-            {project.caseStudyStatus && (
-              <div className="flex justify-between border-b border-[#202020]/5 pb-2">
-                <span className="text-[#202020]/60 font-bold">STATUS:</span>
-                <span className="font-bold text-[#FFB404] bg-[#202020] px-1.5 py-0.5">{project.caseStudyStatus}</span>
-              </div>
-            )}
-
-            {/* External links */}
-            {project.externalLink && (
-              <div className="flex justify-between border-b border-[#202020]/5 pb-2">
-                <span className="text-[#202020]/60 font-bold">EXTERNAL BRIDGE:</span>
-                <a 
-                  href={project.externalLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-bold text-[#FFB404] hover:text-[#202020] underline inline-flex items-center gap-1 uppercase focus-visible:ring-2 focus-visible:ring-[#FFB404] focus-visible:outline-none p-1 rounded"
-                >
-                  SECURE PORTAL <ExternalLink className="w-2.5 h-2.5" />
-                </a>
-              </div>
-            )}
-          </div>
-
-          {/* Tools & Technologies */}
-          {project.tools && project.tools.length > 0 && (
-            <div className="mt-4">
-              <span className="font-mono text-[9px] text-[#202020]/50 uppercase font-bold tracking-widest block mb-3">SYSTEM TECHNOLOGY</span>
-              <div className="flex flex-wrap gap-1.5">
-                {project.tools.map(tool => (
-                  <span 
-                    key={tool}
-                    className="font-mono text-[10px] border border-[#202020]/15 bg-[#F5F0E8] text-[#202020] px-2.5 py-1 font-bold"
-                  >
-                    {tool}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Tags */}
-          {project.tags && project.tags.length > 0 && (
-            <div className="mt-4 border-t border-[#202020]/10 pt-4">
-              <span className="font-mono text-[9px] text-[#202020]/50 uppercase font-bold tracking-widest block mb-3">OPERATIONAL FOCUS</span>
-              <div className="flex flex-wrap gap-1">
-                {project.tags.map(tag => (
-                  <span 
-                    key={tag}
-                    className="font-sans text-[10px] text-[#202020]/75 uppercase bg-transparent border border-[#202020]/10 px-2 py-0.5 font-bold"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-
       </div>
 
       {/* 5. Related Work Footer section */}

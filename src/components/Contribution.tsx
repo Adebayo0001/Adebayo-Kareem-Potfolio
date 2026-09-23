@@ -73,8 +73,8 @@ export default function Contribution() {
             ))}
           </div>
 
-          {/* Dynamic Publications & Presentations List */}
-          <div className="flex flex-col gap-6">
+          {/* Dynamic Publications & Presentations List - Hidden per user request */}
+          <div className="hidden flex-col gap-6">
             <span className="font-mono text-[10px] text-[#202020]/50 uppercase font-bold tracking-widest border-b border-[#202020]/10 pb-2">
               STRUCTURED CONTRIBUTION SYSTEM & REGISTERS
             </span>
@@ -145,8 +145,8 @@ export default function Contribution() {
             </div>
           </div>
 
-          {/* Contextual Proof / Testimonial Statistics Row */}
-          <div className="flex flex-col gap-6">
+          {/* Contextual Proof / Testimonial Statistics Row - Hidden per user request */}
+          <div className="hidden flex-col gap-6">
             <span className="font-mono text-[10px] text-[#202020]/50 uppercase font-bold tracking-widest border-b border-[#202020]/10 pb-2">
               VERIFIABLE SYSTEM METRICS & IMPACT
             </span>
@@ -196,7 +196,7 @@ export default function Contribution() {
                   TSE Academy (The Skills Exchange)
                 </h4>
                 <p className="font-sans text-sm text-[#202020]/85 mt-2 leading-relaxed">
-                  Adebayo co-founded and supports active digital technology and generative AI literacy initiatives inside TSE Academy. The curriculum focuses on removing complex, unnecessary technology jargon and substituting direct, hand-coded product design and AI API integration training for future practitioners.
+                  As the founder of TSE Academy, Adebayo actively directs digital technology and generative AI literacy initiatives inside the institution. The curriculum focuses on removing complex, unnecessary technology jargon and substituting direct, hand-coded product design and AI API integration training for future practitioners.
                 </p>
               </div>
 

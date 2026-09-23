@@ -1,37 +1,55 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
-import { ArrowLeft, CheckCircle2, Send, RefreshCw, ChevronDown, Camera, Sparkles } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, Send, RefreshCw, ChevronDown, Layers, Sparkles, Check, Zap, Target, Cpu, Clock, ShieldCheck } from 'lucide-react';
 
 interface InquiryPageProps {
   initialInterestId: string | null;
   onBack: () => void;
 }
 
-interface InterestCategory {
+interface CategoryDetail {
   id: string;
   label: string;
   headline: string;
+  tagline: string;
   description: string;
   themeColor: string;
+  badge: string;
+  deliverables: string[];
+  capabilities: { title: string; desc: string }[];
+  idealFor: string[];
+  sla: string;
   options: string[];
-  imageUrl: string;
-  imageTag: string;
-  imageBadge: string;
-  imageCaption: string;
 }
 
-const CATEGORIES: Record<string, InterestCategory> = {
+const CATEGORIES: Record<string, CategoryDetail> = {
   ai: {
     id: 'ai',
     label: '01 / PUT AI TO WORK',
     headline: "AI STRATEGY & DEPLOYMENT INQUIRY",
-    description: "Connect with me to map out practical, high-impact spots to deploy artificial intelligence and custom LLM agent systems inside your workflow.",
+    tagline: "Pragmatic, high-impact artificial intelligence architecture and server-side agent integration.",
+    description: "Map out practical, high-impact spots to deploy artificial intelligence and custom LLM agent systems inside your company workflows with strict privacy safeguards.",
     themeColor: '#FFB404',
-    imageUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800&h=1067",
-    imageTag: "ADEBAYO // 3D AI BOT",
-    imageBadge: "NEURAL AGENT SYSTEM",
-    imageCaption: "Custom 3D autonomous AI bot and neural agent deployment architecture.",
+    badge: 'AI SYSTEMS & AUTOMATION',
+    sla: 'Initial Assessment within 24–48 Hours',
+    deliverables: [
+      'Comprehensive AI Feasibility & Opportunity Audit',
+      'Sandboxed Retrieval-Augmented Generation (RAG) Setup',
+      'Server-Side Multi-Model Integration (Gemini, OpenAI)',
+      'Custom Autonomous Agent Workflows & Automation Loops',
+      'Strict Enterprise Data Privacy & Security Governance'
+    ],
+    capabilities: [
+      { title: 'Semantic Search & RAG', desc: 'Transform large document libraries into instant, source-verified conversational search engines.' },
+      { title: 'Workflow Automation', desc: 'Replace redundant operational steps with resilient autonomous LLM pipelines.' },
+      { title: 'Custom AI Internal Tools', desc: 'Tailored web interfaces connecting teams directly to intelligent API endpoints.' }
+    ],
+    idealFor: [
+      'Founders scaling operations without multiplying headcount',
+      'Product teams embedding intelligent features into existing software',
+      'Enterprises seeking privacy-first internal AI search & synthesis'
+    ],
     options: [
       'AI Strategy & Opportunity Mapping',
       'LLM / Generative AI Integration (Gemini, OpenAI)',
@@ -44,12 +62,28 @@ const CATEGORIES: Record<string, InterestCategory> = {
     id: 'digital-product',
     label: '02 / BUILD YOUR DIGITAL IDEA',
     headline: "CUSTOM DIGITAL PRODUCT MVP INQUIRY",
-    description: "Launch your custom digital product or MVP. Let's design, prototype, and build a scalable production-ready web application together.",
+    tagline: "End-to-end design, rapid prototyping, and production-grade full-stack engineering.",
+    description: "Launch your custom digital product or MVP. Let's design, prototype, and build a scalable production-ready web application with modern web stacks.",
     themeColor: '#4F46E5',
-    imageUrl: "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&q=80&w=800&h=1067",
-    imageTag: "ADEBAYO // 3D DIGITAL MVP",
-    imageBadge: "PRODUCT ARCHITECTURE",
-    imageCaption: "Interactive 3D digital product prototypes, web platforms, and scalable MVPs.",
+    badge: 'FULL-STACK PRODUCT ENGINEERING',
+    sla: 'Sprint Roadmap Delivered in 48 Hours',
+    deliverables: [
+      'Interactive Figma Prototypes & Design Systems',
+      'Clean React + TypeScript + Tailwind Web Application',
+      'Secure Server-Side Backend Architecture & APIs',
+      'Cloud Persistence (Firestore / PostgreSQL) Integration',
+      'Performance Optimization & Production Deployment'
+    ],
+    capabilities: [
+      { title: 'Rapid MVP Prototyping', desc: 'Go from concept to clickable, interactive high-fidelity prototype in days.' },
+      { title: 'Scalable Full-Stack Web Apps', desc: 'Robust React + Vite + Node architecture engineered for speed and maintainability.' },
+      { title: 'Design System Architecture', desc: 'Mathematical typographic scales, fluid responsive grids, and accessible components.' }
+    ],
+    idealFor: [
+      'Founders preparing to raise capital or launch to early adopters',
+      'Businesses replacing fragmented spreadsheet systems with modern web apps',
+      'Teams requiring a senior engineer & designer to execute fast'
+    ],
     options: [
       'Custom Web App MVP Development',
       'UX/UI Design & Interactive Prototyping',
@@ -62,12 +96,28 @@ const CATEGORIES: Record<string, InterestCategory> = {
     id: 'training',
     label: '03 / BUILD DIGITAL CAPABILITY',
     headline: "TEAM UPSKILLING & TRAINING WORKSHOP",
-    description: "Empower your engineering teams, design teams, or executives to master generative AI prompt engineering and modern software engineering stacks.",
+    tagline: "Action-oriented pedagogy, live keynotes, prompt engineering masterclasses, and code sandboxes.",
+    description: "Empower your engineering teams, design teams, or executives to master generative AI prompt engineering, AI-assisted development paradigms, and modern software engineering stacks.",
     themeColor: '#10B981',
-    imageUrl: "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?auto=format&fit=crop&q=80&w=800&h=1067",
-    imageTag: "ADEBAYO // KEYNOTE & WORKSHOP",
-    imageBadge: "SPEAKING & ENGAGEMENT",
-    imageCaption: "Live keynotes, team prompt engineering workshops, and hands-on executive coaching.",
+    badge: 'TECHNICAL ENABLEMENT & KEYNOTES',
+    sla: 'Curriculum Tailored to Your Stack in 3 Business Days',
+    deliverables: [
+      'Tailored Hands-On AI Prompt Engineering Curriculum',
+      'Live Keynote Presentations & Interactive Masterclasses',
+      'Sandboxed Code Playgrounds & Real-World Lab Exercises',
+      'Executive 1-on-1 AI Leadership Coaching Sessions',
+      'Permanent Reference Documentation & Best-Practice Playbooks'
+    ],
+    capabilities: [
+      { title: 'Prompt Engineering & Workflow Mastery', desc: 'Move beyond basic chat tools to programmatic API utilization and structured output generation.' },
+      { title: 'AI-Assisted Software Development', desc: 'Train engineers on pair-programming techniques with modern developer tooling.' },
+      { title: 'Executive Technology Briefings', desc: 'Strategic, hype-free landscape analysis for decision-makers and division heads.' }
+    ],
+    idealFor: [
+      'Engineering departments transitioning to AI-assisted coding paradigms',
+      'Product & Design teams looking to accelerate rapid wireframing & research',
+      'Conferences and executive summits seeking engaging keynote sessions'
+    ],
     options: [
       'Generative AI & Prompt Engineering Workshops',
       'Modern Frontend/Backend Web Stack Upskilling',
@@ -79,12 +129,28 @@ const CATEGORIES: Record<string, InterestCategory> = {
     id: 'advisory',
     label: '04 / THINK THROUGH THE NEXT MOVE',
     headline: "TECHNICAL ADVISORY & ARCHITECTURE WORKSPACE",
-    description: "Formulate your next technological leap. Leverage fractional CTO leadership, architecture evaluations, and vendor selection advice.",
+    tagline: "Fractional CTO leadership, stack verification, architectural audits, and risk mitigation.",
+    description: "Formulate your next technological leap. Leverage fractional CTO leadership, architectural evaluations, vendor selection advice, and deep tech strategy.",
     themeColor: '#EC4899',
-    imageUrl: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=800&h=1067",
-    imageTag: "ADEBAYO // STRATEGIC ADVISORY",
-    imageBadge: "EXECUTIVE CONSULTING",
-    imageCaption: "Strategic technical advisory, fractional CTO roadmaps, and architecture audits.",
+    badge: 'FRACTIONAL CTO & STRATEGY',
+    sla: 'Confidential Audit Scope in 24 Hours',
+    deliverables: [
+      'Full-Stack Architecture & Codebase Health Audit',
+      'Technology Stack Selection & Migration Roadmaps',
+      'Vendor & Third-Party API Capability Verification',
+      'Technical Due Diligence & Feasibility Assessments',
+      'Bi-Weekly Strategic Leadership Sprints & Advisory Calls'
+    ],
+    capabilities: [
+      { title: 'Architecture & System Audits', desc: 'Identify bottlenecks, security blindspots, and scalability limits before they become costly.' },
+      { title: 'Fractional CTO Guidance', desc: 'Executive-level technical direction without the full-time C-suite overhead.' },
+      { title: 'Vendor & Tooling Due Diligence', desc: 'Unbiased evaluation of third-party platforms, APIs, and infrastructure partners.' }
+    ],
+    idealFor: [
+      'Non-technical founders needing trusted senior guidance on technical roadmaps',
+      'Growth companies scaling infrastructure to handle enterprise volume',
+      'Investors and executives evaluating software assets and technical risks'
+    ],
     options: [
       'Technical Architecture & Stack Review',
       'Product Strategy & Roadmap Verification',
@@ -110,8 +176,6 @@ const TEAM_SIZES = [
   { value: 'more-than-200', label: 'More than 200' }
 ];
 
-const PORTRAIT_IMAGE_URL = "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=800&h=1067";
-
 export default function InquiryPage({ initialInterestId, onBack }: InquiryPageProps) {
   const shouldReduceMotion = useReducedMotion();
   const [activeTab, setActiveTab] = useState<string>(initialInterestId || 'ai');
@@ -128,24 +192,12 @@ export default function InquiryPage({ initialInterestId, onBack }: InquiryPagePr
   const [submitStatus, setSubmitStatus] = useState<'IDLE' | 'TRANSMITTING' | 'SUCCESS'>('IDLE');
   const [formLogs, setFormLogs] = useState<string[]>([]);
 
-  // State to track custom uploaded images per category or fallback to category defaults
-  const [customImages, setCustomImages] = useState<Record<string, string>>(() => {
-    try {
-      const stored = localStorage.getItem('adebayo_custom_inquiry_images');
-      return stored ? JSON.parse(stored) : {};
-    } catch {
-      return {};
-    }
-  });
-
   const activeCategory = CATEGORIES[activeTab] || CATEGORIES.ai;
-  const currentDisplayImage = customImages[activeTab] || activeCategory.imageUrl;
 
   // Sync state if initialInterestId changes
   useEffect(() => {
     if (initialInterestId && CATEGORIES[initialInterestId]) {
       setActiveTab(initialInterestId);
-      // Reset dropdown choices to match the new category context beautifully
       setSelectedService('');
       setStartTime('');
       setTeamSize('');
@@ -157,41 +209,12 @@ export default function InquiryPage({ initialInterestId, onBack }: InquiryPagePr
     setSelectedService('');
   }, [activeTab]);
 
-  const handleImageUpload = (file: File) => {
-    if (!file.type.startsWith('image/')) return;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      if (e.target?.result && typeof e.target.result === 'string') {
-        const updated = { ...customImages, [activeTab]: e.target.result };
-        setCustomImages(updated);
-        try {
-          localStorage.setItem('adebayo_custom_inquiry_images', JSON.stringify(updated));
-        } catch (err) {
-          console.warn('LocalStorage quota exceeded, image updated in session state only.', err);
-        }
-      }
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const handleResetCustomImage = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    const updated = { ...customImages };
-    delete updated[activeTab];
-    setCustomImages(updated);
-    try {
-      localStorage.setItem('adebayo_custom_inquiry_images', JSON.stringify(updated));
-    } catch (err) {
-      console.warn('LocalStorage error', err);
-    }
-  };
-
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email || !selectedService || !startTime || !teamSize) return;
 
     setSubmitStatus('TRANSMITTING');
-    setFormLogs([`[SYSTEM] Opening standalone transmission tunnel for: ${activeCategory.id.toUpperCase()}...`]);
+    setFormLogs([`[SYSTEM] Opening direct transmission tunnel for: ${activeCategory.id.toUpperCase()}...`]);
 
     setTimeout(() => {
       setFormLogs((prev) => [
@@ -217,9 +240,6 @@ export default function InquiryPage({ initialInterestId, onBack }: InquiryPagePr
 
   const animY = (amount: number) => (shouldReduceMotion ? 0 : amount);
   const animDuration = (duration: number) => (shouldReduceMotion ? 0.05 : duration);
-
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
 
   return (
     <div className="py-8 lg:py-14 flex flex-col gap-8 lg:gap-10 w-full max-w-7xl mx-auto">
@@ -295,114 +315,97 @@ export default function InquiryPage({ initialInterestId, onBack }: InquiryPagePr
         </motion.p>
       </div>
 
-      {/* Dual Column Layout: Image on Left, Form on Right, matching height */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch">
+      {/* Dual Column Layout: Rich Category Overview on Left, Form on Right, matching height */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-stretch">
         
-        {/* Left Column: Editorial Image Container (lg:col-span-5) */}
-        <div className="lg:col-span-5 flex flex-col h-full">
-          <div
-            onClick={() => fileInputRef.current?.click()}
-            onDragOver={(e) => {
-              e.preventDefault();
-              setIsDragging(true);
-            }}
-            onDragLeave={() => setIsDragging(false)}
-            onDrop={(e) => {
-              e.preventDefault();
-              setIsDragging(false);
-              if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-                handleImageUpload(e.dataTransfer.files[0]);
-              }
-            }}
-            className={`group relative w-full h-full min-h-[420px] lg:min-h-full bg-[#202020]/10 overflow-hidden border border-[#202020] shadow-[4px_4px_0px_0px_rgba(32,32,32,1)] rounded flex flex-col justify-between p-6 cursor-pointer transition-colors duration-300 ${
-              isDragging ? 'border-[#FFB404] bg-[#FFB404]/5' : 'border-[#202020]'
-            }`}
-            role="button"
-            tabIndex={0}
-            aria-label="Portrait area. Click or drag-and-drop an image to replace portrait picture."
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                fileInputRef.current?.click();
-              }
-            }}
-          >
-            {/* Dynamic Background Image with subtle high-contrast editorial filter */}
-            <motion.img
-              key={`${activeTab}-${currentDisplayImage}`}
-              initial={{ opacity: 0, scale: 1.05 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: animDuration(0.5) }}
-              src={currentDisplayImage}
-              alt={activeCategory.imageTag}
-              referrerPolicy="no-referrer"
-              className="absolute inset-0 w-full h-full object-cover object-center grayscale contrast-125 transition-transform duration-700 ease-out group-hover:scale-105"
-            />
+        {/* Left Column: Rich Service Category Specification (lg:col-span-5) */}
+        <motion.div
+          key={`${activeTab}-infopanel`}
+          initial={{ opacity: 0, y: animY(12) }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: animDuration(0.5) }}
+          className="lg:col-span-5 flex flex-col h-full bg-[#202020] text-[#F5F0E8] p-6 sm:p-8 relative border border-[#202020] shadow-[4px_4px_0px_0px_rgba(32,32,32,1)] rounded justify-between gap-6"
+        >
+          {/* Corner Decorative Tech Marks */}
+          <span className="absolute top-3 left-3 w-3 h-3 border-t border-l border-[#F5F0E8]/40" />
+          <span className="absolute top-3 right-3 w-3 h-3 border-t border-r border-[#F5F0E8]/40" />
+          <span className="absolute bottom-3 left-3 w-3 h-3 border-b border-l border-[#F5F0E8]/40" />
+          <span className="absolute bottom-3 right-3 w-3 h-3 border-b border-r border-[#F5F0E8]/40" />
 
-            {/* Subtle Gradient / Vignette overlay for text legibility */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#202020]/95 via-[#202020]/35 to-transparent pointer-events-none" />
-
-            {/* Corner Decorative Tech Marks */}
-            <span className="absolute top-3 left-3 w-3 h-3 border-t border-l border-[#F5F0E8] z-20" />
-            <span className="absolute top-3 right-3 w-3 h-3 border-t border-r border-[#F5F0E8] z-20" />
-            <span className="absolute bottom-3 left-3 w-3 h-3 border-b border-l border-[#F5F0E8] z-20" />
-            <span className="absolute bottom-3 right-3 w-3 h-3 border-b border-r border-[#F5F0E8] z-20" />
-
-            {/* Hidden native input for custom picture upload */}
-            <input
-              type="file"
-              ref={fileInputRef}
-              onChange={(e) => {
-                if (e.target.files && e.target.files[0]) {
-                  handleImageUpload(e.target.files[0]);
-                }
-              }}
-              accept="image/*"
-              className="hidden"
-            />
-
-            {/* Top metadata tag on image */}
-            <div className="relative z-10 flex justify-between items-center text-[#F5F0E8] gap-2">
-              <span className="font-mono text-[9px] sm:text-[10px] font-bold tracking-widest uppercase bg-[#202020]/80 px-2.5 py-1 border border-[#F5F0E8]/20 backdrop-blur-xs">
-                {activeCategory.imageTag}
+          {/* Section 1: Header Badge & Summary Tagline */}
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center justify-between border-b border-[#F5F0E8]/15 pb-4">
+              <span className="font-mono text-[10px] text-[#FFB404] font-bold tracking-widest uppercase flex items-center gap-1.5">
+                <Sparkles className="w-3.5 h-3.5" />
+                {activeCategory.badge}
               </span>
-              <span className="font-mono text-[9px] sm:text-[10px] text-[#FFB404] font-bold tracking-wider uppercase bg-[#202020]/80 px-2 py-1 border border-[#FFB404]/30 backdrop-blur-xs">
-                {activeCategory.imageBadge}
+              <span className="font-mono text-[9px] text-[#F5F0E8]/60 bg-[#FFFFFF]/10 px-2 py-0.5 rounded uppercase">
+                DIRECT SCOPE
               </span>
             </div>
 
-            {/* Hover Camera Prompt */}
-            <div className="absolute inset-0 bg-[#202020]/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-2 text-[#F5F0E8] z-20 backdrop-blur-xs">
-              <div className="p-3 bg-[#FFB404] text-[#202020] rounded-full">
-                <Camera className="w-5 h-5" />
-              </div>
-              <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-center px-4">
-                Click or Drop Photo to Customize
-              </span>
-              {customImages[activeTab] && (
-                <button
-                  type="button"
-                  onClick={handleResetCustomImage}
-                  className="mt-2 text-[9px] font-mono font-bold text-[#FFB404] underline hover:text-white"
-                >
-                  Reset to AI Category Default
-                </button>
-              )}
-            </div>
-
-            {/* Bottom context caption */}
-            <div className="relative z-10 flex flex-col gap-1.5 text-[#F5F0E8] pt-20">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-[#FFB404] rounded-full animate-pulse" />
-                <span className="font-mono text-[10px] font-bold uppercase tracking-wider text-[#FFB404]">
-                  ACTIVE INTAKE // 2026
-                </span>
-              </div>
-              <p className="font-sans text-xs text-[#F5F0E8]/95 leading-relaxed font-medium">
-                {activeCategory.imageCaption}
+            <div>
+              <h2 className="font-sans text-lg sm:text-xl font-bold uppercase tracking-tight text-[#F5F0E8] mb-1.5">
+                {activeCategory.tagline}
+              </h2>
+              <p className="font-sans text-xs text-[#F5F0E8]/75 leading-relaxed">
+                Structured direct collaboration with Adebayo Kareem—from architectural clarity through rapid deployment.
               </p>
             </div>
           </div>
-        </div>
+
+          {/* Section 2: Core Deliverables Checklist */}
+          <div className="flex flex-col gap-2.5 bg-[#FFFFFF]/5 p-4 rounded border border-[#F5F0E8]/10">
+            <div className="flex items-center gap-2 text-[#FFB404]">
+              <Target className="w-3.5 h-3.5" />
+              <span className="font-mono text-[10px] font-bold tracking-wider uppercase">
+                WHAT YOU RECEIVE (KEY DELIVERABLES)
+              </span>
+            </div>
+            <ul className="flex flex-col gap-2 pt-1">
+              {activeCategory.deliverables.map((item, idx) => (
+                <li key={idx} className="flex items-start gap-2.5 text-xs text-[#F5F0E8]/90 font-medium">
+                  <div className="w-4 h-4 rounded-full bg-[#FFB404]/20 text-[#FFB404] flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-2.5 h-2.5 stroke-[3]" />
+                  </div>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Section 3: Technical Capabilities Focus */}
+          <div className="flex flex-col gap-3">
+            <div className="flex items-center gap-2 text-[#FFB404]">
+              <Cpu className="w-3.5 h-3.5" />
+              <span className="font-mono text-[10px] font-bold tracking-wider uppercase">
+                CAPABILITY HIGHLIGHTS
+              </span>
+            </div>
+            <div className="grid grid-cols-1 gap-2.5">
+              {activeCategory.capabilities.map((cap, idx) => (
+                <div key={idx} className="bg-[#FFFFFF]/5 p-3 rounded border border-[#F5F0E8]/5 flex flex-col gap-1">
+                  <span className="font-mono text-[11px] font-bold text-[#F5F0E8] uppercase">{cap.title}</span>
+                  <p className="font-sans text-[11px] text-[#F5F0E8]/70 leading-relaxed">{cap.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Section 4: Ideal Client Fit & SLA Footer */}
+          <div className="flex flex-col gap-3 pt-3 border-t border-[#F5F0E8]/15">
+            <div className="flex items-center justify-between text-[10px] font-mono text-[#F5F0E8]/70">
+              <span className="flex items-center gap-1.5 text-[#FFB404] font-bold">
+                <Clock className="w-3.5 h-3.5" />
+                {activeCategory.sla}
+              </span>
+              <span className="flex items-center gap-1">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#10B981]" />
+                100% Confidential
+              </span>
+            </div>
+          </div>
+        </motion.div>
 
         {/* Right Column: Actual Form (lg:col-span-7) matching height */}
         <div className="lg:col-span-7 flex flex-col h-full">
@@ -611,7 +614,7 @@ export default function InquiryPage({ initialInterestId, onBack }: InquiryPagePr
                 <Send className="w-3.5 h-3.5" />
                 <span>
                   {submitStatus === 'IDLE' && `SEND SECURE ${activeCategory.id.toUpperCase()} INQUIRY`}
-                  {submitStatus === 'TRANSMITTING' && 'VERIFYING STANDALONE TUNNEL...'}
+                  {submitStatus === 'TRANSMITTING' && 'VERIFYING DIRECT TUNNEL...'}
                 </span>
               </button>
             </form>

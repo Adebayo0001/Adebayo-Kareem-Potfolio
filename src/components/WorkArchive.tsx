@@ -2,24 +2,29 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { PROJECTS } from '../data';
 import { Project } from '../types';
-import { ArrowRight, Filter, Eye } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Eye } from 'lucide-react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 
 interface WorkArchiveProps {
   onNavigateToProject: (id: string) => void;
+  onBack?: () => void;
 }
 
-export default function WorkArchive({ onNavigateToProject }: WorkArchiveProps) {
-  const [activeFilter, setActiveFilter] = useState<'ALL' | 'BUILD' | 'POSITION' | 'ENABLE' | 'TRANSFORM'>('ALL');
+export default function WorkArchive({ onNavigateToProject, onBack }: WorkArchiveProps) {
+  const [activeFilter, setActiveFilter] = useState<string>('ALL');
   const shouldReduceMotion = useReducedMotion();
   
-  const filters: ('ALL' | 'BUILD' | 'POSITION' | 'ENABLE' | 'TRANSFORM')[] = [
-    'ALL',
-    'BUILD',
-    'POSITION',
-    'ENABLE',
-    'TRANSFORM'
-  ];
+  const handleBack = () => {
+    if (onBack) {
+      onBack();
+    } else {
+      window.location.hash = '';
+    }
+  };
+  
+  // Dynamically extract categories or use standard categories
+  const categories = Array.from(new Set(PROJECTS.map(p => p.category)));
+  const filters = ['ALL', ...categories];
 
   const filteredProjects = activeFilter === 'ALL' 
     ? PROJECTS 
@@ -31,11 +36,22 @@ export default function WorkArchive({ onNavigateToProject }: WorkArchiveProps) {
   }, []);
 
   return (
-    <div id="work-archive-page" className="py-12 lg:py-20 flex flex-col gap-12" aria-labelledby="archive-title">
+    <div id="work-archive-page" className="py-8 lg:py-14 flex flex-col gap-8 lg:gap-10" aria-labelledby="archive-title">
+      {/* Back Button with Small Arrow */}
+      <div className="flex items-center justify-between">
+        <button
+          onClick={handleBack}
+          className="group flex items-center gap-2 font-mono text-xs font-bold tracking-widest text-[#202020] uppercase transition-colors hover:text-[#FFB404] focus-visible:ring-2 focus-visible:ring-[#FFB404] focus-visible:outline-none py-1"
+          aria-label="Return to portfolio home page"
+        >
+          <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform" />
+          <span>BACK TO HOME</span>
+        </button>
+      </div>
+
       {/* Editorial Title */}
       <div className="border-b border-[#202020] pb-8 flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="max-w-2xl">
-          <span className="font-mono text-xs font-bold text-[#FFB404] uppercase tracking-wider block mb-2">INDEX / CATALOGUE</span>
           <h1 id="archive-title" className="font-sans text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#202020] uppercase leading-none">
             Selected Work
           </h1>
@@ -43,37 +59,27 @@ export default function WorkArchive({ onNavigateToProject }: WorkArchiveProps) {
             A chronological archive of strategic systems, typographic brand directions, and technical upskilling initiatives engineered with absolute aesthetic restraint.
           </p>
         </div>
-        <div className="font-mono text-[10px] text-[#202020]/60 tracking-widest uppercase text-left md:text-right font-bold">
-          RECORD COUNT: {PROJECTS.length} ACTIVE &middot; EST_2015
-        </div>
       </div>
 
       {/* Subtle, Fast Filtering Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#202020]/10 pb-4 gap-4">
-        <div className="flex items-center gap-2">
-          <Filter className="w-3.5 h-3.5 text-[#202020]/50" />
-          <span className="font-mono text-[10px] text-[#202020]/50 uppercase font-bold tracking-widest">FILTER MATRIX:</span>
-        </div>
-        
-        <div className="flex flex-wrap gap-2">
-          {filters.map(filter => {
-            const isActive = activeFilter === filter;
-            return (
-              <button
-                key={filter}
-                onClick={() => setActiveFilter(filter)}
-                className={`font-mono text-[10px] font-bold tracking-widest px-3 py-1.5 border transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[#FFB404] focus-visible:outline-none ${
-                  isActive 
-                    ? 'bg-[#202020] border-[#202020] text-[#F5F0E8]' 
-                    : 'bg-transparent border-[#202020]/15 text-[#202020]/75 hover:text-[#202020] hover:border-[#202020]'
-                }`}
-                aria-pressed={isActive}
-              >
-                {filter}
-              </button>
-            );
-          })}
-        </div>
+      <div className="flex flex-wrap items-center gap-2 border-b border-[#202020]/10 pb-4">
+        {filters.map(filter => {
+          const isActive = activeFilter === filter;
+          return (
+            <button
+              key={filter}
+              onClick={() => setActiveFilter(filter)}
+              className={`font-mono text-[10px] font-bold tracking-widest px-3 py-1.5 border transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[#FFB404] focus-visible:outline-none ${
+                isActive 
+                  ? 'bg-[#202020] border-[#202020] text-[#F5F0E8]' 
+                  : 'bg-transparent border-[#202020]/15 text-[#202020]/75 hover:text-[#202020] hover:border-[#202020]'
+              }`}
+              aria-pressed={isActive}
+            >
+              {filter}
+            </button>
+          );
+        })}
       </div>
 
       {/* Large Editorial Project Entries */}
@@ -103,11 +109,6 @@ export default function WorkArchive({ onNavigateToProject }: WorkArchiveProps) {
                       {project.year}
                     </span>
                   </div>
-                  {project.caseStudyStatus && (
-                    <span className="font-mono text-[9px] text-[#202020]/60 tracking-wider uppercase mt-1 font-bold">
-                      STATUS: {project.caseStudyStatus}
-                    </span>
-                  )}
                 </div>
 
                 {/* Main Content & Strategic Description */}

@@ -29,7 +29,12 @@ export interface Project {
   testimonial?: Testimonial;
   externalLink?: string;
   caseStudyStatus?: 'Active' | 'Completed' | 'In Progress' | 'Archived';
-  imageType?: 'build' | 'position' | 'transform' | 'enable'; // keeping for backwards-compat visualizations
+  imageType?: 'build' | 'position' | 'transform' | 'enable' | 'pulseai' | 'smartcall' | 'tseacademy'; // keeping for visualizations
+  problemPoints?: { title: string; desc: string }[];
+  solutionOverview?: string;
+  keyFeatures?: { title: string; desc: string; bulletPoints?: string[] }[];
+  behindTheScenes?: { step: string; title: string; desc: string }[];
+  impactStatement?: string;
 }
 
 export interface Capability {

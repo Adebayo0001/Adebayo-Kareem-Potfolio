@@ -3,9 +3,11 @@ import { motion, useScroll, useTransform } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import { STATS_CONFIG } from '../data';
+import { PORTFOLIO_CONFIG } from '../config';
 
-// Configuration Point: Easily swap this URL with your final portrait image
-const PORTRAIT_IMAGE_URL = "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=800&h=1067";
+// Portrait image served from the public folder with online fallback
+const PORTRAIT_IMAGE_URL = PORTFOLIO_CONFIG.portraitImage || "/portrait.jpg";
+const FALLBACK_PORTRAIT_URL = "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=800&h=1067";
 
 interface HeroProps {
   onExploreWork: () => void;
@@ -16,30 +18,7 @@ export default function Hero({ onExploreWork, onContactClick }: HeroProps) {
   const shouldReduceMotion = useReducedMotion();
   const { scrollY } = useScroll();
 
-  // Stateful portrait image supporting persistent local storage
-  const [portraitImage, setPortraitImage] = React.useState<string>(() => {
-    try {
-      return localStorage.getItem('adebayo_custom_portrait') || PORTRAIT_IMAGE_URL;
-    } catch {
-      return PORTRAIT_IMAGE_URL;
-    }
-  });
-
-  const handleImageUpload = (file: File) => {
-    if (!file.type.startsWith('image/')) return;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      if (e.target?.result && typeof e.target.result === 'string') {
-        setPortraitImage(e.target.result);
-        try {
-          localStorage.setItem('adebayo_custom_portrait', e.target.result);
-        } catch (err) {
-          console.warn('LocalStorage quota exceeded, image updated but not cached.', err);
-        }
-      }
-    };
-    reader.readAsDataURL(file);
-  };
+  const [portraitImage, setPortraitImage] = React.useState<string>(PORTRAIT_IMAGE_URL);
 
   // Subtle parallax translation for the portrait image on scroll
   const portraitY = useTransform(scrollY, [0, 600], [0, 45]);
@@ -49,89 +28,26 @@ export default function Hero({ onExploreWork, onContactClick }: HeroProps) {
   const animY = (amount: number) => shouldReduceMotion ? 0 : amount;
   const animDuration = (duration: number) => shouldReduceMotion ? 0.05 : duration;
 
-  // Shared Editorial Portrait Component to guarantee perfect UI consistency
+  // Shared Editorial Portrait Component - clean display with no upload or hover effects
   const EditorialPortrait = ({ className = "" }: { className?: string }) => {
-    const fileInputRef = React.useRef<HTMLInputElement>(null);
-    const [isDragging, setIsDragging] = React.useState(false);
-
-    const handleContainerClick = () => {
-      fileInputRef.current?.click();
-    };
-
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files && e.target.files[0]) {
-        handleImageUpload(e.target.files[0]);
-      }
-    };
-
-    const handleDragOver = (e: React.DragEvent) => {
-      e.preventDefault();
-      setIsDragging(true);
-    };
-
-    const handleDragLeave = () => {
-      setIsDragging(false);
-    };
-
-    const handleDrop = (e: React.DragEvent) => {
-      e.preventDefault();
-      setIsDragging(false);
-      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-        handleImageUpload(e.dataTransfer.files[0]);
-      }
-    };
-
     return (
       <div 
-        onClick={handleContainerClick}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
-        className={`group relative w-full aspect-[3/4] bg-[#202020]/5 overflow-hidden border cursor-pointer transition-colors duration-300 ${
-          isDragging ? 'border-[#FFB404] bg-[#FFB404]/5' : 'border-[#202020]'
-        } shadow-[1px_1px_0px_0px_rgba(32,32,32,0.1)] ${className}`}
-        role="button"
-        tabIndex={0}
-        aria-label="Portrait area. Click or drag-and-drop an image to replace portrait picture."
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            handleContainerClick();
-          }
-        }}
+        className={`relative w-full aspect-[3/4] bg-[#202020]/5 overflow-hidden border border-[#202020] shadow-[1px_1px_0px_0px_rgba(32,32,32,0.1)] ${className}`}
       >
-        <input 
-          type="file" 
-          ref={fileInputRef} 
-          onChange={handleFileChange} 
-          accept="image/*" 
-          className="hidden" 
-        />
-        
         <motion.img
           src={portraitImage}
+          onError={() => {
+            if (portraitImage !== FALLBACK_PORTRAIT_URL) {
+              setPortraitImage(FALLBACK_PORTRAIT_URL);
+            }
+          }}
           alt="Adebayo Kareem Editorial Portrait"
-          referrerPolicy="no-referrer"
-          className="w-full h-full object-cover object-center pointer-events-none"
+          className="w-full h-full object-cover object-center"
           style={{ y: yShift }}
           initial={{ opacity: 0, scale: shouldReduceMotion ? 1 : 1.03 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: animDuration(1.2), ease: [0.16, 1, 0.3, 1] }}
         />
-
-        {/* Minimalist Action overlay (replaces permanent text overlays) */}
-        <div className={`absolute inset-0 bg-[#202020]/75 flex flex-col items-center justify-center p-4 text-center transition-opacity duration-300 ${
-          isDragging ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-        }`}>
-          <div className="border border-[#F5F0E8]/40 p-4 flex flex-col items-center gap-2 max-w-[200px]">
-            <span className="w-1.5 h-1.5 bg-[#FFB404]" />
-            <p className="font-mono text-[9px] font-bold text-[#F5F0E8] uppercase tracking-widest leading-normal">
-              REPLACE PORTRAIT
-            </p>
-            <p className="font-mono text-[8px] text-[#F5F0E8]/70 uppercase tracking-wider leading-relaxed">
-              Drag & drop image<br />or click to select
-            </p>
-          </div>
-        </div>
       </div>
     );
   };

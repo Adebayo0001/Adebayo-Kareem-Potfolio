@@ -23,10 +23,6 @@ export default function Footer() {
         
         {/* Left Side: Editorial Branding */}
         <div className="md:col-span-5 flex flex-col gap-4">
-          <div className="flex items-center gap-2">
-            <div className="w-2.5 h-2.5 bg-[#FFB404]" />
-            <span className="font-mono text-xs font-bold text-[#F5F0E8] uppercase tracking-widest">AK / 01</span>
-          </div>
           <div>
             <h3 className="font-sans text-lg font-bold text-[#FFFFFF] leading-snug">
               Adebayo Kareem

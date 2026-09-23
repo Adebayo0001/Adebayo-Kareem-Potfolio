@@ -11,96 +11,182 @@ export const STATS_CONFIG = {
 
 export const PROJECTS: Project[] = [
   {
-    id: 'proj-01',
+    id: 'proj-smart-call',
     num: '01',
-    category: 'IMPLEMENT',
-    title: 'AI-Assisted Product Development',
-    domain: 'Product Design & Engineering',
-    year: '2024',
-    shortDescription: 'A secure, server-side AI-orchestrated analytical workspace helping multi-disciplinary consulting teams ingest, query, and synthesize extensive regulatory archives in real time.',
-    client: '[REDACTED MULTI-NATIONAL AUDIT & ADVISORY FIRM]',
-    role: 'Chief Creative Technologist / Lead Systems Architect',
-    context: 'The advisory firm regularly operates under extreme time pressure to review, audit, and verify corporate adherence to dense regulatory policy frameworks across different national jurisdictions.',
-    challenge: 'Enterprise auditing crews were spending hundreds of hours manually indexing, reading, and extracting data from extensive corporate archives. This labor-intensive loop resulted in high operational overhead, human fatigue-induced errors, and extended client onboarding timelines.',
-    approach: 'Engineered a sandboxed analytical workspace featuring custom Retrieval-Augmented Generation (RAG) pipelines, semantic indexers, and self-correcting logic agents. Rather than presenting a chat interface, we structured a split-screen workspace displaying verified source-citation sidebars, allowing users to scroll straight to corresponding sections in original source PDFs.',
-    contribution: 'Owned the core software architecture, designed the user experience (typography systems and fluid transition states), implemented the server-side proxy handlers for the @google/genai SDK, and facilitated interactive testing sessions with active enterprise audit leaders.',
-    outcome: 'Collapsed the audit and document-to-insight preparation cycle from approximately 12 business days to under 4 hours. Strategists now interact with mathematically verified source citations, reducing human auditing errors to absolute zero.',
-    tools: ['React 18', 'Vite', 'Google Gen AI SDK', 'Semantic Indexing', 'Tailwind CSS', 'Motion/React'],
-    tags: ['AI Strategy', 'Custom RAG Pipelines', 'Workspace Design', 'Semantic Search'],
-    testimonial: {
-      quote: 'The semantic indexer completely re-engineered our operational timelines. What used to be weeks of manual compliance alignment is now synthesized in hours with zero data exposure.',
-      author: '[REDACTED PARTNER]',
-      role: 'Head of Enterprise Risk & Assurance Strategy',
-      organization: '[CONFIDENTIAL GLOBAL ADVISORY]'
-    },
-    caseStudyStatus: 'Completed',
-    imageType: 'build'
-  },
-  {
-    id: 'proj-02',
-    num: '02',
     category: 'BUILD',
-    title: 'Brand Strategy Architecture',
-    domain: 'Brand Positioning & Identity',
-    year: '2023',
-    shortDescription: 'Defining the brand architecture, core strategic narrative, and minimalist physical/digital identity system for an emerging hardware-enabled green infrastructure group.',
-    client: '[REDACTED HARDWARE-ENABLED GREEN UTILITY GROUP]',
-    role: 'Principal Brand Strategist & Designer',
-    context: 'An innovative technology group with proprietary hardware was expanding into national utility grids but struggled to distinguish itself from lower-tier component commodity vendors.',
-    challenge: 'A highly brilliant hardware engineering team communicated in excessively technical, dense jargon. This created communication blocks with municipal and institutional decision-makers who lacked engineering expertise, leading to stagnation in the B2B procurement pipeline.',
-    approach: 'Conducted comprehensive executive stakeholder workshops and customer interviews to distill the value proposition. Drafted a brand position handbook centering the group around the narrative of "sustainable computing infrastructure," pairing the story with a rigid, high-contrast visual design system.',
-    contribution: 'Authored the core brand positioning document, formulated the strategic narrative, and designed the comprehensive grid-based visual identity handbook (typographic specs, proportion scales, layout guidelines, and digital asset sheets).',
-    outcome: 'Elevated the brand positioning to align directly with premium ESG corporate standards. The unified strategic voice enabled internal marketing and business development teams to spin up clean, institutional-grade collateral with 50% faster preparation cycles.',
-    tools: ['Figma Design Systems', 'Editorial Art Direction', 'Brand Strategy Mapping', 'Visual Grid Calibration'],
-    tags: ['Brand Position', 'Typographic Identity', 'Strategic Narrative', 'B2B Positioning'],
+    title: 'Smart Call Monitor: An AI Assistant for Customer Service Teams',
+    domain: 'Voice AI & Customer Operations',
+    year: '2024',
+    shortDescription: 'Smart Call Monitor (built for PulseAI) is an automated platform for businesses managing remote teams that securely records calls and messages, using AI to transcribe, summarize, take notes, and grade conversations effortlessly.',
+    client: 'PulseAI / Smart Call Monitor',
+    role: 'Lead AI Systems Architect & Full-Stack Engineer',
+    context: 'Smart Call Monitor was built as an all-in-one platform for businesses that manage remote or field-based customer service and sales teams. It was designed to act as an automated assistant that securely records calls and messages, and then uses Artificial Intelligence (AI) to listen, take notes, and grade how well those conversations went, making the management of a remote team effortless.',
+    challenge: 'When a business relies on a remote team making phone calls or sending WhatsApp messages to customers, managers face critical operational pain points: (1) Flying Blind with no visibility into phone conversations, (2) Too Much Audio with no time to manually listen to hours of recordings, (3) Missed Follow-ups & Unhappy Customers slipping through the cracks without immediate manager escalation, and (4) Scattered Information dispersed across cellular voice calls and WhatsApp chat threads.',
+    approach: 'Developed a seamless system that automated the heavy lifting. The solution automatically captured conversations happening on company phones and immediately turned them into easy-to-read reports on a central dashboard. By integrating advanced Gemini AI, the platform acted like an invisible manager that instantly read, summarized, and scored every single interaction.',
+    contribution: 'Architected and built the full-stack web dashboard (Command Center, Call Log with audio playback, Sentiment Analytics, and Export Engine), integrated the Gemini AI processing pipeline for instant transcription and structured scoring, implemented trigger-word alert systems, and designed the responsive, high-contrast dark-mode interface.',
+    outcome: 'Completely transformed quality control workflows: instead of manually reviewing only 2% of calls, businesses were empowered to effortlessly review 100% of customer interactions. With AI taking care of listening and transcribing, managers shifted focus entirely toward coaching, business growth, and customer retention.',
+    tools: ['Gemini AI API', 'React 18', 'Audio Processing Engine', 'Vercel', 'Tailwind CSS', 'TypeScript', 'Analytics Visualizers'],
+    tags: ['Voice AI', 'Customer Operations', 'Gemini API', 'Speech Intelligence', 'QA Automation', 'Executive Dashboard'],
     caseStudyStatus: 'Completed',
-    imageType: 'position'
+    imageType: 'pulseai',
+    externalLink: 'https://callmonitor-vert.vercel.app/dashboard/live',
+    problemPoints: [
+      {
+        title: 'Flying Blind',
+        desc: 'Managers cannot be everywhere at once. It was hard to know exactly what was being said to customers over the phone.'
+      },
+      {
+        title: 'Too Much Audio, Too Little Time',
+        desc: 'Even if calls were recorded, no one had the time to manually sit and listen to hours of audio to figure out who was doing a good job.'
+      },
+      {
+        title: 'Missed Follow-ups & Angry Customers',
+        desc: 'Important tasks mentioned on calls could easily slip through the cracks. Even worse, an unhappy customer might threaten to cancel or complain without management knowing until it was too late.'
+      },
+      {
+        title: 'Scattered Information',
+        desc: 'Conversations happened over regular phone calls and WhatsApp, making it tough to keep all customer interactions in one organized place.'
+      }
+    ],
+    solutionOverview: 'A seamless system that automates the heavy lifting by capturing conversations on company phones and immediately generating easy-to-read reports on a central dashboard. Advanced AI acts like an invisible manager that instantly reads, summarizes, and scores every interaction.',
+    keyFeatures: [
+      {
+        title: '1. Automatic Note-Taking and Recording',
+        desc: 'A background mobile client automatically saves call audio, notes duration, and tags geographic locations.'
+      },
+      {
+        title: '2. AI-Powered Insights',
+        desc: 'Generates instant transcripts, summaries, mood detection, and grading scores within seconds of call completion.'
+      },
+      {
+        title: '3. "Red Flag" Alerts for Managers',
+        desc: 'Highlights critical calls in red on the dashboard if trigger words like "cancel" or "lawyer" are detected.'
+      },
+      {
+        title: '4. WhatsApp Summaries',
+        desc: 'Monitors company WhatsApp chats to deliver brief summaries and actionable to-do lists.'
+      },
+      {
+        title: '5. Manager Command Center',
+        desc: 'A central web dashboard to inspect recent calls, track team averages, and play original audio.'
+      }
+    ],
+    behindTheScenes: [
+      {
+        step: '01',
+        title: 'The Call Happened',
+        desc: 'An employee talks to a customer on their work phone.'
+      },
+      {
+        step: '02',
+        title: 'Automatic Upload',
+        desc: 'The moment the call ends, audio is securely transmitted to the cloud pipeline.'
+      },
+      {
+        step: '03',
+        title: 'The AI Listened',
+        desc: 'Gemini AI processes the audio, types out the conversation, detects sentiment, and grades the call.'
+      },
+      {
+        step: '04',
+        title: 'The Dashboard Updated',
+        desc: 'The manager logs into the dashboard to find full reports, key takeaways, and action items waiting.'
+      }
+    ],
+    impactStatement: 'Empowered businesses to transition from reviewing just 2% of calls manually to reviewing 100% of customer interactions automatically with AI precision.'
   },
   {
     id: 'proj-03',
-    num: '03',
+    num: '02',
     category: 'ENABLE',
-    title: 'TSE Academy AI Curriculum',
-    domain: 'Technical Education & Academy Design',
+    title: 'TSE Academy: Redefining the Online Learning Experience',
+    domain: 'EdTech, AI Mentorship & Pedagogy',
     year: '2024',
-    shortDescription: 'Co-designing, structuring, and facilitating the primary prompt engineering and AI-assisted programming curriculum for future developers and corporate builders.',
+    shortDescription: 'TSE Academy is a premium, highly interactive e-learning platform centered around a "learn by building" methodology, featuring 24/7 contextual AI coaching, interactive transcripts, practical understanding checks, and smart installment payments.',
     client: 'TSE Academy (The Skills Exchange)',
-    role: 'Co-Founder & Chief Technology Educator',
-    context: 'With rapid shifts in software engineering driven by LLMs, traditional coding bootcamps and business programs were teaching outdated development practices that ignored AI-assisted paradigms.',
-    challenge: 'Students and corporate teams were learning either pure, highly theoretical software engineering with no speed tools, or passive consumer prompt behaviors that lacked structural programming integrity.',
-    approach: 'Formulated a comprehensive curriculum centered on hand-coded frontend principles (CSS grids, React, semantic HTML) integrated with AI-assisted workflows. Emphasized sandboxed environments where students write custom code in conjunction with programmatic API calls rather than chatting with consumer interfaces.',
-    contribution: 'Designed the complete syllabus, authored interactive code playground sandboxes, produced technical documentation guides, and facilitated multi-week intensive instructional cohorts.',
-    outcome: 'Coached over 500+ active practitioners and corporate engineers. Graduates transitioned from passive prompt users to highly capable builders, experiencing an estimated 3x increase in interface prototyping speed with zero loss in structural code quality.',
-    tools: ['Custom Code Playgrounds', 'Interactive Lab Material', 'TypeScript Sandbox', 'Modern API Integrations'],
-    tags: ['AI Curriculum', 'Syllabus Design', 'Developer Enablement', 'Technical Pedagogy'],
+    role: 'Founder & Chief Product / Technology Architect',
+    context: 'Online learning is broken. Most self-paced courses suffer from dismal completion rates because they rely on passive video consumption. When a learner gets stuck, there is no immediate help—leading to frustration and abandonment. "Stuck is a dead end." Furthermore, traditional platforms use generic multiple-choice quizzes that test rote memorization rather than real-world skills, and often lack flexible payment structures that cater to a global audience. TSE Academy was born out of the need to create a platform where learners are supported 24/7, challenged practically, and given flexible ways to invest in their education.',
+    challenge: 'Self-paced courses suffer from severe learner drop-off because students get stuck without immediate help. Generic chatbots fail to understand video and codebase context, video reviewing is tedious, quizzes fail to measure practical competency, and rigid upfront fees block global learners.',
+    problemPoints: [
+      {
+        title: 'Passive Video & Zero Real-Time Help',
+        desc: 'When a learner gets stuck on a complex concept or code error, there is no immediate support—leading to frustration and abandonment. "Stuck is a dead end."'
+      },
+      {
+        title: 'Rote Quizzes vs Real-World Skills',
+        desc: 'Traditional platforms use generic multiple-choice quizzes that test rote memorization rather than practical problem-solving ability.'
+      },
+      {
+        title: 'Absence of Linear Discipline',
+        desc: 'Allowing learners to skip ahead causes cognitive overload, surface-level skimming, and premature course abandonment before fundamentals are mastered.'
+      },
+      {
+        title: 'Rigid Upfront Payment Barriers',
+        desc: 'Traditional platforms demand full upfront payments, excluding a massive global audience of eager learners from investing in their education.'
+      }
+    ],
+    approach: 'The goal was to build a premium, highly interactive e-learning platform centered around a "learn by building" methodology. The process involved understanding the learner’s journey where drop-offs occur, integrating AI as a core feature rather than a gimmick, embedding invisible "Industry Context" notes from educators, enforcing strict linear progression with scenario checkpoints, and designing a frictionless 2-part installment payment structure with a sophisticated, focus-driven UI.',
+    keyFeatures: [
+      {
+        title: '1. The 24/7 Personal AI Coach',
+        desc: 'An intelligent AI Companion that understands the specific context of lessons and guides students to solve bugs rather than giving copy-paste answers.'
+      },
+      {
+        title: '2. Interactive Video & Transcripts',
+        desc: 'Video lessons are accompanied by synchronized transcripts that allow one-click timestamp navigation for efficient review.'
+      },
+      {
+        title: '3. Practical "Understanding Checks"',
+        desc: 'Automatically extracts core concepts from videos to generate scenario-based, real-world application tests that enforce true skill mastery.'
+      },
+      {
+        title: '4. Enforced Linear Progression',
+        desc: 'A structured, step-by-step learning path that prevents skipping ahead, eliminating cognitive overwhelm.'
+      },
+      {
+        title: '5. Smart 2-Part Installment Payments',
+        desc: 'A frictionless global payment system allowing 50% upfront payment with an automated gate at the midpoint.'
+      },
+      {
+        title: '6. Powerful Creator Dashboard',
+        desc: 'A backend for educators to track student progress, manage community interactions, and automatically re-index the AI knowledge base.'
+      }
+    ],
+    behindTheScenes: [
+      {
+        step: '01',
+        title: 'Learner Ingests Video & Live Transcripts',
+        desc: 'Students stream video lessons with synchronized real-time transcripts and interactive timestamp scrubbers.'
+      },
+      {
+        step: '02',
+        title: 'Contextual AI Mentor Intervenes',
+        desc: 'When stuck, the student invokes the 24/7 AI Coach, which references the exact timestamp transcript and industry notes to guide them.'
+      },
+      {
+        step: '03',
+        title: 'Scenario Understanding Check',
+        desc: 'Upon video completion, the system presents an interactive real-world scenario challenge that must be passed to unlock Module 2.'
+      },
+      {
+        step: '04',
+        title: 'Mastery Progression & Installment Gate',
+        desc: 'The next module unlocks seamlessly, with the automated 50% installment gate pausing progress at the midpoint until balance settlement.'
+      }
+    ],
+    contribution: 'Led the comprehensive platform conception, user experience design system, full-stack architecture, transcript synchronization algorithms, 24/7 AI mentor prompt engineering with industry context injection, and installment payment checkout flows.',
+    outcome: 'TSE Academy bridges the gap between affordable self-paced courses and expensive, high-touch bootcamps. By combining the scale of video learning with the personalized mentorship of AI, the platform dramatically reduces learner drop-off, validates true skill acquisition through practical testing, increases conversions via installment plans, and empowers creators to deliver high-touch mentorship without manual hand-holding.',
+    impactStatement: 'Bridges the gap between affordable self-paced courses and high-touch bootcamps: eliminated "stuck is a dead end" drop-offs, enforced 100% mastery progression, and expanded global enrollment with smart 2-part installment plans.',
+    tools: ['React 18', 'TypeScript', 'Google Gemini AI', 'Interactive Video Transcripts', 'Linear Progression Engine', 'Installment Payment Gateways', 'Tailwind CSS', 'Motion/React'],
+    tags: ['AI Mentorship', 'EdTech Platform', 'Interactive Transcripts', 'Mastery Learning', 'Full-Stack Architecture'],
     testimonial: {
-      quote: 'Adebayo’s curriculum stripped away all the distracting marketing hype surrounding artificial intelligence and gave our teams a practical, code-first blueprint for engineering modern web systems.',
-      author: '[REDACTED TRAINING DIRECTOR]',
-      role: 'Director of Professional Education & Skill Transfer',
-      organization: 'TSE ACADEMY PARTNER GROUP'
+      quote: 'TSE Academy redefined our educational delivery. Students never get stuck because the 24/7 AI Coach understands our exact lessons, and our course completion rates have surged.',
+      author: 'Adebayo Kareem',
+      role: 'Lead Instructor & AI Strategist',
+      organization: 'TSE ACADEMY'
     },
     caseStudyStatus: 'Completed',
-    imageType: 'enable'
-  },
-  {
-    id: 'proj-04',
-    num: '04',
-    category: 'RESEARCH',
-    title: 'Enterprise Knowledge Protocol',
-    domain: 'Digital Transformation & Upskilling',
-    year: '2024',
-    shortDescription: 'Standardizing knowledge architectures and safe AI-assisted development protocols across a multi-regional creative consultancy, introducing sandbox toolkits and interactive skill transfer.',
-    client: '[REDACTED MULTI-REGIONAL DIGITAL CONSULTANCY]',
-    role: 'Digital Transformation & AI Advisory Lead',
-    context: 'A multi-regional agency with over 450 active employees required a unified strategy to standardise internal tooling, manage operational data leaks, and harness developer speed gains safely.',
-    challenge: 'Uncoordinated adoption of unverified consumer-facing artificial intelligence services by isolated departments risked source-code leaks, intellectual property conflicts, and client-confidentiality breaches.',
-    approach: 'Formulated and deployed a strict internal AI governance protocol. Created secure local sandbox playgrounds for developers and creative staff. Organized and conducted immersive, interactive upskilling masterclasses focusing on practical, safe, local-first API operations.',
-    contribution: 'Drafted the complete AI Corporate Compliance Policy, designed and configured the containerized local development sandboxes, and facilitated regional hands-on upskilling workshops.',
-    outcome: 'Established 100% policy alignment and secure data-hygiene compliance across three global divisions. Provided staff with verified developer configurations, dramatically accelerating engineering delivery schedules.',
-    tools: ['AI Governance Protocols', 'Sandbox Infrastructure', 'Workflow Audits', 'Compliance Handbooks'],
-    tags: ['AI Governance', 'Corporate Upskilling', 'Digital Transformation', 'Data Security'],
-    caseStudyStatus: 'Completed',
-    imageType: 'transform'
+    imageType: 'tseacademy'
   }
 ];
 
@@ -330,7 +416,7 @@ export const STRUCTURED_CONTRIBUTIONS: StructuredContribution[] = [
   {
     id: 'scon-01',
     organization: 'TSE Academy (The Skills Exchange)',
-    role: 'Co-Founder & Lead Systems Educator',
+    role: 'Founder & Lead Systems Educator',
     programName: 'Prompt Systems & Creative UI Engineering',
     topic: 'Pairing modern React architectures with Google Gen AI programmatic reasoning blocks.',
     date: 'Spring 2024 (Active)',

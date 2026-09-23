@@ -7,9 +7,10 @@
 
 export const PORTFOLIO_CONFIG = {
   // Primary Contact Configurations
-  email: "hello@adebayokareem.com",
+  email: "a.abidemi0777@gmail.com",
   whatsappNumber: "447400123456", // E.164 format, numbers only for perfect WhatsApp link generation
   bookingUrl: "https://calendly.com/adebayokareem/consultation",
+  portraitImage: "/portrait.jpg", // Public folder portrait image
 
   // YouTube / Masterclass Videos
   youtubeUrls: {

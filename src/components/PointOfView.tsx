@@ -13,7 +13,7 @@ const CARDS = [
   {
     id: 'digital-product',
     number: '02',
-    title: 'BUILD YOUR DIGITAL IDEA',
+    title: 'Build Custom AI-powered Products/Applications',
     description: "For founders, businesses, and teams with an idea for a website, platform, or digital product.\n\nI help move the idea from rough concept to a clear, usable digital experience.",
     cta: 'EXPLORE →'
   },
